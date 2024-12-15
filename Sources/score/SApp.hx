@@ -1,55 +1,16 @@
-package sui;
+package score;
 
-import kha.Color;
-import kha.Shaders;
+import kha.Canvas;
 import kha.Assets;
 import kha.Window;
 import kha.Scheduler;
 import kha.System;
-import kha.FastFloat;
 import kha.Framebuffer;
-import kha.input.Mouse;
-import kha.input.Keyboard;
-import kha.graphics2.Graphics;
 
 @:build(score.macro.SMacro.build())
 class SApp {
-	#if SAPP_DEBUG_FPS
-	static var fst:FastFloat = 0;
-	static var fpsCounter:Int = 0;
-	static var fps:Int = 0;
-
-	static inline function showFPS(g2:Graphics) {
-		++fpsCounter;
-		var t = System.time;
-		if (t - fst >= 1) {
-			fps = fpsCounter;
-			fpsCounter = 0;
-			fst = t;
-		}
-		g2.font = Assets.fonts.get("Roboto_Regular");
-		g2.fontSize = 14;
-		g2.color = Color.Black;
-		g2.drawString('FPS: ${fps}', 6, 6);
-		g2.color = Color.White;
-		g2.drawString('FPS: ${fps}', 5, 5);
-	}
-	#end
-
-	public static var window:Window;
-	public static var keyboard:Keyboard;
-	public static var mouse:Mouse;
-	public static var cursor(default, set):MouseCursor;
-
-	static inline function set_cursor(value:MouseCursor):MouseCursor {
-		cursor = value;
-		mouse.setSystemCursor(value);
-		return value;
-	}
-
-	static var onUpdateListeners:Array<Void->Void> = [];
-	static var onRenderListeners:Array<Void->Void> = [];
-	static var updateTaskId:Int;
+	@readonly public static var window:Window;
+	@readonly public static var input:Input;
 
 	public static inline function start(?title:String = "SApp", ?width:Int = 800, ?height:Int = 600, ?vsync:Bool = true, ?samplesPerPixel:Int = 1,
 			setup:Void->Void) {
@@ -63,19 +24,17 @@ class SApp {
 			}
 		}, function(window:Window) {
 			SApp.window = window;
-			SApp.mouse = Mouse.get();
-			SApp.keyboard = Keyboard.get();
 
 			Assets.loadEverything(function() {
 				setup();
 				System.notifyOnFrames(function(frames:Array<Framebuffer>) {
-					var g2 = frames[0].g2;
+					var frame = frames[0];
 					for (f in onRenderListeners)
-						f(g2);
+						f(frame);
 					#if SAPP_DEBUG_FPS
-					g2.begin(false);
-					showFPS(g2);
-					g2.end();
+					frame.g2.begin(false);
+					showFPS(frame.g2);
+					frame.g2.end();
 					#end
 				});
 				startUpdates();
@@ -86,6 +45,10 @@ class SApp {
 	public static inline function stop() {
 		System.stop();
 	}
+
+	static var onUpdateListeners:Array<Void->Void> = [];
+	static var onRenderListeners:Array<Canvas->Void> = [];
+	static var updateTaskId:Int;
 
 	public static inline function startUpdates() {
 		updateTaskId = Scheduler.addTimeTask(function() {
@@ -106,11 +69,11 @@ class SApp {
 		onUpdateListeners.remove(f);
 	}
 
-	public static inline function notifyOnRender(f:Void->Void) {
+	public static inline function notifyOnRender(f:Canvas->Void) {
 		onRenderListeners.push(f);
 	}
 
-	public static inline function removeRenderListener(f:Void->Void) {
+	public static inline function removeRenderListener(f:Canvas->Void) {
 		onRenderListeners.remove(f);
 	}
 }

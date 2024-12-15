@@ -1,4 +1,4 @@
-package sui.core.graphics.shaders;
+package score.graphics;
 
 import kha.Canvas;
 import kha.graphics4.PipelineState;

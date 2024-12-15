@@ -7,7 +7,7 @@ import haxe.macro.Expr.Field;
 using score.macro.MacroExt;
 using score.utils.StringExt;
 
-class SUIMacro {
+class SMacro {
 	public static function build():Array<Field> {
 		var fields:Array<Field> = Context.getBuildFields();
 		for (field in fields)
