@@ -44,7 +44,7 @@ class Shader {
 
 	function setUniforms(target:Canvas, ?uniforms:Dynamic) {}
 
-	public inline function draw(target:Canvas, vertices:VertexBuffer, indices:IndexBuffer, ?uniforms:Dynamic):Void {
+	public inline function render(target:Canvas, vertices:VertexBuffer, indices:IndexBuffer, ?uniforms:Dynamic):Void {
 		target.g4.setPipeline(pipeline);
 		target.g4.setVertexBuffer(vertices);
 		target.g4.setIndexBuffer(indices);

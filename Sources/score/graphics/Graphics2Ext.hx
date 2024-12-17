@@ -17,7 +17,7 @@ class Graphics2Ext {
 	/**
 	 * Draws a arc.
 	 * @param	ccw (optional) Specifies whether the drawing should be counterclockwise.
-	 * @param	segments (optional) The amount of lines that should be used to draw the arc.
+	 * @param	segments (optional) The amount of lines that should be used to render the arc.
 	 */
 	public static function drawArc(g2:Graphics, cx:Float, cy:Float, radius:Float, sAngle:Float, eAngle:Float, strength:Float = 1, ccw:Bool = false,
 			segments:Int = 0):Void {
@@ -65,7 +65,7 @@ class Graphics2Ext {
 	/**
 	 * Draws a filled arc.
 	 * @param	ccw (optional) Specifies whether the drawing should be counterclockwise.
-	 * @param	segments (optional) The amount of lines that should be used to draw the arc.
+	 * @param	segments (optional) The amount of lines that should be used to render the arc.
 	 */
 	public static function fillArc(g2:Graphics, cx:Float, cy:Float, radius:Float, sAngle:Float, eAngle:Float, ccw:Bool = false, segments:Int = 0):Void {
 		#if kha_html5
@@ -111,7 +111,7 @@ class Graphics2Ext {
 
 	/**
 	 * Draws a circle.
-	 * @param	segments (optional) The amount of lines that should be used to draw the circle.
+	 * @param	segments (optional) The amount of lines that should be used to render the circle.
 	 */
 	public static function drawCircle(g2:Graphics, cx:Float, cy:Float, radius:Float, strength:Float = 1, segments:Int = 0):Void {
 		#if kha_html5
@@ -166,7 +166,7 @@ class Graphics2Ext {
 
 	/**
 	 * Draws a filled circle.
-	 * @param	segments (optional) The amount of lines that should be used to draw the circle.
+	 * @param	segments (optional) The amount of lines that should be used to render the circle.
 	 */
 	public static function fillCircle(g2:Graphics, cx:Float, cy:Float, radius:Float, segments:Int = 0):Void {
 		#if kha_html5
