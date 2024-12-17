@@ -1,5 +1,3 @@
-let project = new Project("New Project");
-project.addAssets("Assets/**");
-project.addShaders("Shaders/**");
+let project = new Project("sCore");
 project.addSources("Sources");
 resolve(project);
