@@ -1,3 +1,3 @@
 let project = new Project("sCore");
-project.addSources("Sources");
+project.addSources("src");
 resolve(project);
