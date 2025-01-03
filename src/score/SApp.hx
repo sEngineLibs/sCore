@@ -12,21 +12,17 @@ class SApp {
 	@readonly public static var window:Window;
 	@readonly public static var input:Input;
 
-	public static inline function start(?title:String = "SApp", ?width:Int = 800, ?height:Int = 600, ?vsync:Bool = true, ?samplesPerPixel:Int = 1,
-			setup:Void->Void) {
+	public static inline function start(?title:String = "SApp", ?width:Int = 800, ?height:Int = 600, setup:Void->Void) {
 		System.start({
 			title: title,
 			width: width,
-			height: height,
-			framebuffer: {
-				verticalSync: vsync,
-				samplesPerPixel: samplesPerPixel
-			}
+			height: height
 		}, function(window:Window) {
 			SApp.window = window;
 
 			Assets.loadEverything(function() {
 				setup();
+				startUpdates();
 				System.notifyOnFrames(function(frames:Array<Framebuffer>) {
 					var frame = frames[0];
 					for (f in onRenderListeners)
@@ -37,7 +33,6 @@ class SApp {
 					frame.g2.end();
 					#end
 				});
-				startUpdates();
 			});
 		});
 	}
